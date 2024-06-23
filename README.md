@@ -42,7 +42,10 @@ To run the app CD to /Startup Folder
 ```
 npm run dev
 ```
+## Development
 
+* Frontend development (React) in the startup/src directory
+* Backend development (Laravel) in the root directory
 
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
