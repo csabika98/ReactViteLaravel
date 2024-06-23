@@ -14,7 +14,7 @@ http://localhost:8888/api -> PHP 8.3 + Laravel BACKEND
 ## Installation
 ## Installation script works only on Windows 
 
-* use the installation script, install.ps1 (you will need to run as administrator)
+* Use the installation script, install.ps1 (you will need to run as administrator) (it will install PHP + Composer + Configure php.ini)
 ```
 powershell -ExecutionPolicy ByPass -File .\install.ps1
 ```
