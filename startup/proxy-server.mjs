@@ -40,9 +40,10 @@ const runPHPApp = () => {
     }
     console.log('Starting PHP application...');
     console.log('Using PHP at:', phpExePath);
-    console.log('Executing command:', phpExePath, ['artisan', 'serve']);
+	// --port=8001
+    console.log('Executing command:', phpExePath, ['artisan', 'serve', '--port=8001']);
 
-    PHPProcess = spawn(phpExePath, ['artisan', 'serve'], {
+    PHPProcess = spawn(phpExePath, ['artisan', 'serve', '--port=8001'], {
         stdio: 'inherit',
         shell: true,
         cwd: PHPProjectPath // Set the current working directory
@@ -65,7 +66,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/api/', createProxyMiddleware({
-    target: 'http://localhost:8000/',
+    target: 'http://localhost:8001/',
     changeOrigin: true,
     ws: true
 }));
