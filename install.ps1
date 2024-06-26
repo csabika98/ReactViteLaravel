@@ -3,7 +3,6 @@ if (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
     # Relaunch the script with administrator privileges and keep the window open after execution
     $arguments = "-NoProfile -ExecutionPolicy Bypass -File `"" + $MyInvocation.MyCommand.Definition + "`" -Wait"
     Start-Process PowerShell -ArgumentList $arguments -Verb RunAs
-    Exit
 }
 
 # Your existing script starts here
