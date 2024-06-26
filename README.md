@@ -28,8 +28,7 @@ composer install
 ```
 php artisan key:generate
 ```
-* <b>Copy database.sqlite to the database folder</b>
-* <b>CD to /Startup Folder and Install NodeJS dependencies</b>
+* <b>cd to /Startup Folder and Install NodeJS dependencies</b>
 ```
 npm install
 ```
