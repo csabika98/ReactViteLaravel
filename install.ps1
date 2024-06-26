@@ -1,8 +1,12 @@
+# Check if the script is running as an administrator
 if (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
-    Write-Warning "You do not have Administrator rights to run this script!`nPlease re-run this script as an Administrator!"
-    Break
+    # Relaunch the script with administrator privileges
+    $arguments = "-NoProfile -ExecutionPolicy Bypass -File `"" + $MyInvocation.MyCommand.Definition + "`""
+    Start-Process PowerShell -ArgumentList $arguments -Verb RunAs
+    Exit
 }
 
+# Your existing script starts here
 $currentPolicy = Get-ExecutionPolicy
 if ($currentPolicy -eq 'Restricted' -or $currentPolicy -eq 'AllSigned') {
     Write-Warning "Current execution policy is $currentPolicy, which might prevent some scripts from running.`nConsider setting the policy to RemoteSigned or Bypass if you encounter issues."
