@@ -29,7 +29,7 @@ install_php_composer:
 	php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 	php -r "unlink('composer-setup.php');"
 	@echo "Installing PHP-XML"
-	sudo apt-get install php-xml
+	sudo apt-get install -y php-xml
 	@echo "Install PGSQL & SQLite & MySQL drivers"
 	sudo apt-get install -y php-sqlite3
 	sudo apt-get install -y php-mysql
