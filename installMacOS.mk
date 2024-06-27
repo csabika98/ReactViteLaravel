@@ -1,12 +1,6 @@
-.PHONY: all check_admin install_homebrew install_node install_php_composer copy_php_ini copy_database
+.PHONY: all install_homebrew install_node install_php_composer copy_php_ini copy_database
 
-all: check_admin install_homebrew install_node install_php_composer copy_php_ini copy_database
-
-check_admin:
-	@if [ "$$(id -u)" -ne 0 ]; then \
-		echo "This script must be run as root. Please run with sudo."; \
-		exit 1; \
-	fi
+all: install_homebrew install_node install_php_composer copy_php_ini copy_database
 
 install_homebrew:
 	@echo "Checking for Homebrew..."
@@ -27,20 +21,6 @@ install_php_composer:
 	brew link --force --overwrite php@8.3
 	@echo "Installing Composer..."
 	brew install composer
-	@echo "Installing PHP-XML"
-	pecl install xml
-	@echo "Install PGSQL & SQLite & MySQL drivers"
-	pecl install pdo_sqlite
-	pecl install pdo_mysql
-	pecl install pdo_pgsql
-	pecl install mongodb
-
-copy_php_ini:
-	@echo "Copying php.ini to the PHP directory..."
-	SCRIPT_DIRECTORY=$$(pwd)
-	PHP_INI_SOURCE_PATH="$$SCRIPT_DIRECTORY/php.ini"
-	PHP_INI_PATH="/usr/local/etc/php/8.3/php.ini"
-	sudo cp $$PHP_INI_SOURCE_PATH $$PHP_INI_PATH
 
 copy_database:
 	@echo "Copying database.sqlite to the database directory..."

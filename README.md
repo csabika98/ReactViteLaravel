@@ -1,5 +1,17 @@
 # React + Vite + PHP 8 + Laravel
 
+# TO INSTALL IT ON MAC
+```
+make -f installMacOS.mk
+```
+# TO INSTALL IT ON LINUX (DEBIAN, APT-GET)
+```
+sudo make -f installLinuxDebian.mk
+```
+# TO INSTALL IT ON Windows (needs administrator previliges)
+```
+powershell -ExecutionPolicy ByPass -File .\install.ps1
+```
 ## Screenshots
 
 ![](screenshots/1.png)
@@ -10,7 +22,7 @@
 http://localhost:8888 -> VITE + REACT
 http://localhost:8888/api -> PHP 8.3 + Laravel BACKEND
 ```
-
+## 
 ## UPDATE 2024.06.27
 * Installation is now supports debian based Linux(Ubuntu, Debian..)!
 * Install Make - If you don't have it
