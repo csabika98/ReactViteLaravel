@@ -1,11 +1,8 @@
-# Check if the script is running as an administrator
 if (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
-    # Relaunch the script with administrator privileges and keep the window open after execution
-    $arguments = "-NoProfile -ExecutionPolicy Bypass -File `"" + $MyInvocation.MyCommand.Definition + "`" -Wait"
-    Start-Process PowerShell -ArgumentList $arguments -Verb RunAs
+    Write-Warning "You do not have Administrator rights to run this script!`nPlease re-run this script as an Administrator!"
+    Break
 }
 
-# Your existing script starts here
 $currentPolicy = Get-ExecutionPolicy
 if ($currentPolicy -eq 'Restricted' -or $currentPolicy -eq 'AllSigned') {
     Write-Warning "Current execution policy is $currentPolicy, which might prevent some scripts from running.`nConsider setting the policy to RemoteSigned or Bypass if you encounter issues."
@@ -13,9 +10,19 @@ if ($currentPolicy -eq 'Restricted' -or $currentPolicy -eq 'AllSigned') {
     Write-Host "Current execution policy is $currentPolicy. The script will proceed."
 }
 
+
+if (!(Get-Command 'scoop' -ErrorAction SilentlyContinue)) {
+    Write-Host "Installing Scoop..."
+    Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
+}
+
+
 scoop bucket add main
 scoop install php
 scoop install composer
+
+# Adding Node.js LTS 20 installation
+scoop install nodejs-lts
 
 $username = [Environment]::UserName
 $phpIniDestPath = "C:\Users\$username\scoop\apps\php\current\"

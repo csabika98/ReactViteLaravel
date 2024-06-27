@@ -11,6 +11,28 @@ http://localhost:8888 -> VITE + REACT
 http://localhost:8888/api -> PHP 8.3 + Laravel BACKEND
 ```
 
+## UPDATE 2024.06.27
+* Installation is now supports debian based Linux(Ubuntu, Debian..)!
+* Install Make - If you don't have it
+```
+1. sudo apt-get install make
+2. sudo make -f installLinuxDebian.mk
+```
+* After you done with the installation script close Powershell and open it again.
+
+* <b>Install vendor packages</b>
+```
+composer install
+```
+* <b>Rename .env.template to .env and run the following</b>
+```
+php artisan key:generate
+```
+* <b>cd to /Startup Folder and Install NodeJS dependencies</b>
+```
+npm install
+```
+
 ## Installation
 ## Installation script works only on Windows 
 

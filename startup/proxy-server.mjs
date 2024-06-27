@@ -15,6 +15,7 @@ function findProjectRoot(currentDir, targetFolderName) {
     const root = path.parse(currentDir).root;
     while (currentDir !== root) {
         let possiblePath = path.join(currentDir, targetFolderName);
+        console.log(`Checking path: ${possiblePath}`);
         if (fs.existsSync(possiblePath)) {
             return currentDir; 
         }
@@ -24,13 +25,16 @@ function findProjectRoot(currentDir, targetFolderName) {
 }
 
 const projectRoot = findProjectRoot(__dirname, 'ReactViteLaravel');
+
+if (!projectRoot) {
+    console.error('Could not find project root. Make sure the ReactViteLaravel folder exists.');
+    process.exit(1);
+}
+
 const PHPProjectPath = path.join(projectRoot, 'ReactViteLaravel');
 console.log(`RUN PHP project at path: ${PHPProjectPath}`);
 
 let PHPProcess;
-
-const userHome = process.env.USERPROFILE;
-const phpExePath = path.join(userHome, 'scoop', 'apps', 'php', 'current', 'php.exe');
 
 const runPHPApp = () => {
     if (PHPProcess) {
@@ -39,14 +43,27 @@ const runPHPApp = () => {
         PHPProcess = null;
     }
     console.log('Starting PHP application...');
-    console.log('Using PHP at:', phpExePath);
-	// --port=8001
+
+    let phpExePath;
+    if (process.platform === 'win32') {
+        const userHome = process.env.USERPROFILE;
+        phpExePath = path.join(userHome, 'scoop', 'apps', 'php', 'current', 'php.exe');
+    } else {
+        phpExePath = 'php';
+    }
+
+    if (process.platform === 'win32' && !fs.existsSync(phpExePath)) {
+        console.error(`PHP executable not found at path: ${phpExePath}`);
+        process.exit(1);
+    }
+
+    console.log('Using PHP executable:', phpExePath);
     console.log('Executing command:', phpExePath, ['artisan', 'serve', '--port=8001']);
 
     PHPProcess = spawn(phpExePath, ['artisan', 'serve', '--port=8001'], {
         stdio: 'inherit',
         shell: true,
-        cwd: PHPProjectPath // Set the current working directory
+        cwd: PHPProjectPath
     });
 
     PHPProcess.on('error', (err) => {
@@ -88,6 +105,7 @@ process.on('exit', () => {
         PHPProcess.kill();
     }
 });
+
 
 
 
